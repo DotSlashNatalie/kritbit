@@ -10,7 +10,7 @@ function vdump() {
 
     $ret = "<pre style='background: #eee; border: 1px solid #aaa; clear: both; overflow: auto; padding: 10px; text-align: left; margin-bottom: 5px'>";
 
-    $ret .- "<b>".htmlspecialchars(trim($code[$backtrace[0]['line']-1]))."</b>\n";
+    $ret .= "<b>".htmlspecialchars(trim($code[$backtrace[0]['line']-1]))."</b>\n";
 
     $ret .= "\n";
 

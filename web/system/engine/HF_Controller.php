@@ -1,4 +1,7 @@
 <?php
+
+namespace system\engine;
+
 class HF_Controller
 {
     protected $config;

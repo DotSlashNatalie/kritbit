@@ -1,4 +1,5 @@
 <?php
+
 define('H2O_VERSION', '0.3');
 defined('DS') or define('DS', DIRECTORY_SEPARATOR);
 defined('H2O_ROOT') or define('H2O_ROOT', dirname(__FILE__) . DS);

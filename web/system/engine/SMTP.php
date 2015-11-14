@@ -1,5 +1,7 @@
 <?php
 
+namespace system\engine;
+
 // Based on tutorial from here: https://portal.cyberhostpro.com/knowledgebase/170/PHP-Mail-Script-with-SMTP-Authentication.html
 class HF_SMTP
 {

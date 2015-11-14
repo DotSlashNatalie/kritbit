@@ -10,9 +10,14 @@
  * @license	MIT License <http://www.opensource.org/licenses/mit-license.php>
  ********************************** 80 Columns *********************************
  */
+
+namespace vendor\DB;
+
 class DB
 {
 	static $q,$c,$p,$i = '`';
+
+	static $type = "";
 
 	/**
 	 * Fetch a column offset from the result set (COUNT() queries)
@@ -80,6 +85,21 @@ class DB
 	}
 
 	/**
+	 * Fetch all query result rows as object
+	 *
+	 * @param string $query query string
+	 * @param array $params query parameters
+	 * @return array
+	 */
+	static function fetchObject($query, $className, $params = NULL)
+	{
+		if( ! $statement = DB::query($query, $params)) return null;
+
+		$statement->setFetchMode(\PDO::FETCH_INTO, new $className);
+		return $statement->fetchAll();
+	}
+
+	/**
 	 * Prepare and send a query returning the PDOStatement
 	 *
 	 * @param string $query query string
@@ -125,5 +145,18 @@ class DB
 			array_values($data + array($value))
 		))
 			return $statement->rowCount();
+	}
+
+	/**
+	 * Returns array containing all field names
+	 * @param $table
+	 * @return array
+	 */
+	static function getColumns($table) {
+		switch (self::$type) {
+			case "SQLITE":
+				return self::fetch("PRAGMA table_info($table)", null, 1);
+				break;
+		}
 	}
 }

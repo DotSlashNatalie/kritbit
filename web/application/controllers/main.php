@@ -1,11 +1,15 @@
 <?php
 
-class main extends HF_Controller
+class main extends base
 {
     public function index()
     {
 
-        echo $this->loadRender("login.html");
+        if ($this->isLoggedIn()) {
+            echo "Hello - " . $this->sessionData->userId;
+            echo "email = " . $this->user->email;
+        }
+        //echo "hello";
 
     }
 }

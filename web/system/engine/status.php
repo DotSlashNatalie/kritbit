@@ -1,5 +1,7 @@
 <?php
 
+namespace system\engine;
+
 class HF_Status extends HF_Controller
 {
 
