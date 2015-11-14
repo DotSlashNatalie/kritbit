@@ -2,7 +2,6 @@
 
 use system\vendor\phpoauthlib2\providers\GoogleAuthProvider;
 use system\vendor\phpoauthlib2\OAuth;
-use \vendor\DB\DB;
 use application\models\Users;
 
 class login extends base {
@@ -22,7 +21,6 @@ class login extends base {
         if ($check === true) {
             $email = $authProvider->getEmail();
             /** @var Users $user */
-            //$user = DB::fetchObject("SELECT * FROM users WHERE email = ?", "users", [$email]);
             $users = Users::getByField("email", $email);
             if (count($users) == 0) {
                 echo $this->accessDenied();
