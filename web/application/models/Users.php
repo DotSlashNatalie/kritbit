@@ -6,6 +6,5 @@ use system\engine\HF_Model;
 
 class Users extends HF_Model
 {
-    public $id;
     public $email;
 }

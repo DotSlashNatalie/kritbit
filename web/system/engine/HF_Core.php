@@ -21,7 +21,7 @@ class HF_Core
 	private $config = array();
 	private $tpl;
 	
-	public function __construct()
+	public function __construct($migrations=false)
 	{
 		$config = include("system/engine/config-default.php");
 		if (is_file("application/config.php"))
@@ -38,7 +38,8 @@ class HF_Core
 			));
 		set_error_handler("\\system\\engine\\HF_Core::error_handler");
 		//set_exception_handler("\\system\\engine\\HF_Core::exception_handler");
-		$this->findController();
+		if (!$migrations)
+			$this->findController();
 	}
 
 	public static function exception_handler($e) {
@@ -108,7 +109,7 @@ class HF_Core
 					include_once($path . $arr[$i] . ".php");
 					if ($i + 1 < count($arr)) // if there is a define after the controller name - this would be the method name
 					{
-						$this->loadController(new $arr[$i]($this->config, $this, $this->tpl), $arr[$i], $arr[$i+1], array_slice ($arr, 2));
+						$this->loadController(new $arr[$i]($this->config, $this, $this->tpl), $arr[$i], $arr[$i+1], array_slice ($arr, 3));
 					} else { // call index
 						$this->loadController(new $arr[$i]($this->config, $this, $this->tpl), $arr[$i], "index");
 					}
@@ -140,10 +141,10 @@ class HF_Core
 		if (is_file(getcwd() . "/application/status.php"))
 		{
 			include_once (getcwd() . "/application/status.php");
-			$this->loadController(new HF_Status($this->config, $this, $this->tpl), "HF_Status", "Status404");
+			$this->loadController(new HF_Status($this->config, $this, $this->tpl), "\\system\\engine\\HF_Status", "Status404");
 		} else {
 			include_once(getcwd() . "/system/engine/status.php");
-			$this->loadController(new HF_Status($this->config, $this, $this->tpl), "HF_Status", "Status404");
+			$this->loadController(new HF_Status($this->config, $this, $this->tpl), "\\system\\engine\\HF_Status", "Status404");
 
 		}
 	}
@@ -327,8 +328,13 @@ class HF_Core
                 foreach (glob("application/migrations/*.php") as $filename)
                 {
                     if (!in_array($filename, $migrationArray)) {
-                        include $filename;
-						DB::insert("migrations", ["migration" => $filename, "ran_at" => (new \DateTime())->format("Y-m-d")]);
+						try {
+							include $filename;
+							DB::insert("migrations", ["migration" => $filename, "ran_at" => (new \DateTime())->format("Y-m-d")]);
+						} catch (\Exception $e) {
+							echo "[HF_Core] - Migration error - $e";
+							exit(1);
+						}
                     }
 
 

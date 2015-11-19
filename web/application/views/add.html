@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="page-header">
+    <h1>Add job</h1>
+</div>
+
+<form method="post" class="form-horizontal">
+
+    <div class="form-group col-sm-10">
+        <label for="jobName" class="col-sm-2 control-label">Job Name</label>
+        <div class="col-sm-10">
+            <input type="text" value="{{job.jobName}}" class="form-control" name="jobName" id="jobName" placeholder="Job Name">
+        </div>
+    </div>
+    <br>
+    <br>
+
+    <div class="col-sm-10 form-group container">
+        <label class="col-sm-2 control-label" for="dropdownMenu1">Run Type:</label>
+        <div id="dropdown1" class="col-sm-10 dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                <span id="selectedType">Ran by Kritbit</span>
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <li data-type="1"><a href="#">Ran by Kritbit</a></li>
+                <li data-type="2"><a href="#">External Source</a></li>
+            </ul>
+            <input type="hidden" id="runType" name="runType" value="{{job.runType}}">
+        </div>
+    </div>
+    <br>
+    <br>
+
+
+    <div class="form-group col-sm-10">
+        <label class="col-sm-2 control-label" for="script">Script for Kritbit to run:</label>
+        <div class="col-sm-10">
+            <textarea class="form-control" rows="6" name="runScript" id="script">{{job.runScript}}</textarea>
+        </div>
+    </div>
+    <br>
+    <br>
+
+    <div class="form-group col-sm-10">
+        <label class="col-sm-2 control-label" for="runCondition">When to run:</label>
+        <div class="col-sm-10">
+            <input type="text" value="{{job.cron}}" class="form-control" name="cron" id="runCondition" placeholder="Cron style">
+        </div>
+    </div>
+    <br>
+    <br>
+
+    <div class="form-group col-sm-10">
+        <label class="col-sm-2 control-label" for="failScript">Script to run on failure:</label>
+        <div class="col-sm-10">
+            <textarea class="form-control" rows="6" name="failScript" id="failScript">{{job.failScript}}</textarea>
+        </div>
+    </div>
+
+    <div class="form-group col-sm-10">
+        <label class="col-sm-2 control-label" for="private">Require login to view history:</label>
+        <div class="checkbox">
+            <label>
+                <input {% if job.view_private == 1 %}checked="checked"{% endif %} name="view_private" id="private" type="checkbox"> Yes
+            </label>
+        </div>
+    </div>
+
+
+
+    <div class="col-sm-10 form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            {% if job %}
+            <button type="submit" class="btn btn-default">Update</button>
+            {% else %}
+            <button type="submit" class="btn btn-default">Create</button>
+            {% endif %}
+        </div>
+    </div>
+</form>
+
+<script type="text/javascript">
+    $(function () {
+        $('#dropdown1 li').on('click', function(){
+            $("#runType").val($(this).data("type"));
+            $("#selectedType").text($(this).text());
+            //$('#datebox').val($(this).text());
+        });
+    });
+</script>
+
+{% endblock %}

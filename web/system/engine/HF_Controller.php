@@ -15,7 +15,7 @@ class HF_Controller
         $this->core = $core;
     }
 
-    public function loadRender($template, $parameters=array())
+    protected function loadRender($template, $parameters=array())
     {
         $this->tpl->loadTemplate($template);
         return $this->tpl->render($parameters);

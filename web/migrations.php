@@ -1,11 +1,12 @@
 <?php
 
+spl_autoload_extensions(".php"); // comma-separated list
+spl_autoload_register();
+
 foreach (glob("system/vendor/*.php") as $filename)
 {
     include $filename;
 }
 
-require('system/engine/HF_Core.php');
-
-$core = new HF_Core();
+$core = new \system\engine\HF_Core(true);
 $core->runMigrations();

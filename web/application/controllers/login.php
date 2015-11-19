@@ -5,6 +5,9 @@ use system\vendor\phpoauthlib2\OAuth;
 use application\models\Users;
 
 class login extends base {
+
+    protected $loginRequired = false;
+
     private function accessDenied() {
         return "ACCESS DENIED";
     }

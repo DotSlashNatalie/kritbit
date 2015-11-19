@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="page-header">
+    <h1>Job list</h1>
+</div>
+
+<table align="center" style="width: 60%;" class="table table-hover">
+    <thead>
+        <tr>
+            <th>Edit</th>
+            <th>Name</th>
+            <th>Run Type</th>
+            <th>Cron</th>
+            <th>Last Run</th>
+            <th>Last Result</th>
+            <th>History</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for job in jobs %}
+        <tr>
+            <td><a class="btn btn-default" href="/job/edit/{{job.id}}" role="button">Edit</a></td>
+            <td>{{job.jobName}}</td>
+            <td>{{job.getRunType}}</td>
+            <td>{{job.cron}}</td>
+            <td>{{job.getLastRun}}</td>
+            <td>{{job.last_result}}</td>
+            <td><a class="btn btn-default" href="/history/view/{{job.jobName}}-{{job.id}}" role="button">History</a></td>
+            <td><a class="btn btn-danger" href="/job/delete/{{job.id}}" role="button">Delete</a></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

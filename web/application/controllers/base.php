@@ -4,9 +4,12 @@ use \application\models\Sessions;
 
 abstract class base extends \system\engine\HF_Controller {
 
+    /** @var  \application\models\Users $user */
+    protected $user = null;
     protected $session = null;
     protected $sessionData = null;
-    public function isLoggedIn() {
+    protected $loginRequired = true;
+    protected function isLoggedIn() {
         if (!$this->sessionData && !isset($this->sessionData->userId)) {
             header("Location: /login");
             return false;
@@ -14,6 +17,52 @@ abstract class base extends \system\engine\HF_Controller {
             return true;
         }
     }
+
+    protected function loadRender($template, $parameters=array()) {
+        $newParameters = array_merge($parameters, ["user" => $this->user]);
+        return parent::loadRender($template, $newParameters);
+    }
+
+    protected function isUserLoggedIn() {
+        if (isset($_COOKIE["session"])) {
+            $validSession = Sessions::getByField("sessionid", $_COOKIE["session"]);
+            if ($validSession) {
+                try {
+                    $this->session = $validSession[0];
+                    $this->sessionData = json_decode($this->session->data);
+                    if ($this->sessionData == null) {
+                        return false;
+                    }
+                    $this->user = \application\models\Users::getByField("id", $this->sessionData->userId)[0];
+                    return true;
+                } catch (\Exception $e) {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        }
+        return false;
+    }
+
+    protected function login() {
+        if (isset($_COOKIE["session"])) {
+           if (!$this->user) {
+               header("Location: /login");
+           }
+        } else {
+            $bool = true;
+            $bytes = openssl_random_pseudo_bytes(10, $bool);
+            $sessionId = bin2hex($bytes);
+            $this->session = new Sessions();
+            $this->session->ip = $_SERVER["REMOTE_ADDR"];
+            $this->session->userAgent = $_SERVER["HTTP_USER_AGENT"];
+            $this->session->sessionid = $sessionId;
+            $this->session->save();
+            setcookie("session", $sessionId, 2147483647);
+        }
+    }
+
     public function __construct($config, $core, $tpl)
     {
         parent::__construct($config, $core, $tpl);
@@ -35,35 +84,9 @@ abstract class base extends \system\engine\HF_Controller {
             \vendor\DB\DB::$c = $this->pdo;
         }
 
-        if (isset($_COOKIE["session"])) {
-            $validSession = Sessions::getByField("sessionid", $_COOKIE["session"]);
-            if ($validSession) {
-                try {
-                    $this->session = $validSession[0];
-                    $this->sessionData = json_decode($this->session->data);
-                    if ($this->sessionData == null) {
-                        return;
-                    }
-                    $this->user = \application\models\Users::getByField("id", $this->sessionData->userId)[0];
-                } catch (\Exception $e) {
-                    setcookie("session", "", time() - 3600);
-                    header("Location: /login");
-                }
-            } else {
-                setcookie("session", "", time() - 3600);
-                header("Location: /login");
-            }
-        } else {
-            $bool = true;
-            $bytes = openssl_random_pseudo_bytes (10, $bool);
-            $sessionId = bin2hex($bytes);
-            $this->session = new Sessions();
-            $this->session->ip = $_SERVER["REMOTE_ADDR"];
-            $this->session->userAgent = $_SERVER["HTTP_USER_AGENT"];
-            $this->session->sessionid = $sessionId;
-            $this->session->save();
-            setcookie("session", $sessionId, 2147483647);
+        $this->isUserLoggedIn();
+        if ($this->loginRequired) {
+            $this->login();
         }
-
     }
 }

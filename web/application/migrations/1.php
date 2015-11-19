@@ -1,5 +1,7 @@
 <?php
 
+use \vendor\DB\DB;
+
 echo "Creating session table..." . PHP_EOL;
 DB::query("CREATE TABLE sessions (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
