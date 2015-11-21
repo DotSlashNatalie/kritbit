@@ -85,7 +85,8 @@
         <label class="col-sm-2 control-label" for="private">Require login to view history:</label>
         <div class="checkbox">
             <label>
-                <input {% if job.view_private == 1 %}checked="checked"{% endif %} name="view_private" id="private" type="checkbox"> Yes
+                <input {% if job.view_private == 1 %}checked="checked"{% endif %} id="private" type="checkbox"> Yes
+                <input type="hidden" id="view_private" name="view_private" value="{{job.view_private}}">
             </label>
         </div>
     </div>
@@ -109,6 +110,13 @@
             $("#runType").val($(this).data("type"));
             $("#selectedType").text($(this).text());
             //$('#datebox').val($(this).text());
+        });
+        $("#private").on("change", function () {
+            if ($(this).is(":checked")) {
+                $("#view_private").val(1);
+            } else {
+                $("#view_private").val(0);
+            }
         });
     });
 </script>

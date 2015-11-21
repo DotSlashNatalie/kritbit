@@ -1,5 +1,7 @@
 <?php
 
+use \vendor\DB\DB;
+
 class job extends base {
     public function add() {
         if (!isset($_POST["jobName"])) {
@@ -54,5 +56,18 @@ class job extends base {
 		    header("Location: /");
 	    }
     }
+
+	public function search() {
+		if (isset($_GET["q"])) {
+			$histories = DB::fetch("
+SELECT
+	jobs.id as job_id, jobs.jobName, histories.id, run_date, time_taken, result
+FROM histories
+INNER JOIN jobs ON jobs.user_id = ?  AND histories.jobs_id = jobs.id
+WHERE output LIKE ?
+", [$this->user->id, "%" . $_GET["q"] . "%"]);
+			echo $this->loadRender("search.html", ["search" => $_GET["q"], "histories" => $histories]);
+		}
+	}
 
 }

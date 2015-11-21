@@ -9,6 +9,7 @@ abstract class base extends \system\engine\HF_Controller {
 	protected $session = null;
 	protected $sessionData = null;
 	protected $loginRequired = true;
+	protected $sessionRequired = true;
 	protected function isLoggedIn() {
 		if (!$this->sessionData && !isset($this->sessionData->userId)) {
 			header("Location: /login");
@@ -108,8 +109,10 @@ abstract class base extends \system\engine\HF_Controller {
 			\vendor\DB\DB::$c = $this->pdo;
 		}
 
-		$this->setupSession();
-		$this->setupUser();
+		if ($this->sessionRequired) {
+			$this->setupSession();
+			$this->setupUser();
+		}
 		if ($this->loginRequired && !$this->user) {
 			$this->login();
 		}

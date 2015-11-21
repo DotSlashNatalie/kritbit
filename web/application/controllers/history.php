@@ -18,6 +18,22 @@ class history extends base
         return true;
     }
 
+	public function runscript($jobId) {
+		$jobObject = \application\models\Jobs::getByField("id", $jobId);
+		if ($this->checkAccess($jobObject[0])) {
+			header("Content-Type: text/plain");
+			echo $jobObject[0]->runScript;
+		}
+	}
+
+	public function failscript($jobId) {
+		$jobObject = \application\models\Jobs::getByField("id", $jobId);
+		if ($this->checkAccess($jobObject[0])) {
+			header("Content-Type: text/plain");
+			echo $jobObject[0]->failScript;
+		}
+	}
+
     public function view($id) {
         $idArr = explode("-", $id);
 	    try {
