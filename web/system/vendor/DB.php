@@ -93,10 +93,10 @@ class DB
 	 */
 	static function fetchObject($query, $className, $params = NULL)
 	{
+		/** @var \PDOStatement $statement */
 		if( ! $statement = DB::query($query, $params)) return null;
 
-		$statement->setFetchMode(\PDO::FETCH_INTO, new $className);
-		return $statement->fetchAll();
+		return $statement->fetchAll(\PDO::FETCH_CLASS, $className);
 	}
 
 	/**

@@ -11,8 +11,11 @@ class Jobs extends \system\engine\HF_Model {
     public $last_run;
     public $last_result;
     public $user_id;
-    public $api_key;
+    public $hash;
+    public $sharedkey;
     public $view_private;
+	public $force_run;
+	public $comments;
 
     public $h2o_safe = true;
 

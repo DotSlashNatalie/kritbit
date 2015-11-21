@@ -8,7 +8,7 @@ DB::query("CREATE TABLE histories (
             output TEXT,
             jobs_id INTEGER,
             run_date DATETIME,
-            time_taken INTEGER,
+            time_taken DECIMAL(10,5),
             result INTEGER
   );");
 

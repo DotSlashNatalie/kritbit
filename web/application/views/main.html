@@ -17,6 +17,7 @@
             <th>Last Result</th>
             <th>History</th>
             <th>Delete</th>
+            <th>Force Run</th>
         </tr>
     </thead>
     <tbody>
@@ -30,6 +31,11 @@
             <td>{{job.last_result}}</td>
             <td><a class="btn btn-default" href="/history/view/{{job.jobName}}-{{job.id}}" role="button">History</a></td>
             <td><a class="btn btn-danger" href="/job/delete/{{job.id}}" role="button">Delete</a></td>
+            {% if job.force_run == 1 %}
+            <td><a class="btn btn-warning" href="/job/force/{{job.id}}" role="button">Enabled</a></td>
+            {% else %}
+            <td><a class="btn btn-success" href="/job/force/{{job.id}}" role="button">Disabled</a></td>
+            {% endif %}
         </tr>
     {% endfor %}
     </tbody>

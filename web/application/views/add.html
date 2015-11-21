@@ -21,14 +21,14 @@
         <label class="col-sm-2 control-label" for="dropdownMenu1">Run Type:</label>
         <div id="dropdown1" class="col-sm-10 dropdown">
             <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                <span id="selectedType">Ran by Kritbit</span>
+                <span id="selectedType">{% if job.runType %}{{job.getRunType}}{% else %}Ran by Kritbit{% endif %}</span>
                 <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                 <li data-type="1"><a href="#">Ran by Kritbit</a></li>
                 <li data-type="2"><a href="#">External Source</a></li>
             </ul>
-            <input type="hidden" id="runType" name="runType" value="{{job.runType}}">
+            <input type="hidden" id="runType" name="runType" value="{% if job.runType %}{{job.runType}}{% else %}1{% endif %}">
         </div>
     </div>
     <br>
@@ -57,6 +57,27 @@
         <label class="col-sm-2 control-label" for="failScript">Script to run on failure:</label>
         <div class="col-sm-10">
             <textarea class="form-control" rows="6" name="failScript" id="failScript">{{job.failScript}}</textarea>
+        </div>
+    </div>
+
+    <div class="form-group col-sm-10">
+        <label class="col-sm-2 control-label" for="comment">Job comment:</label>
+        <div class="col-sm-10">
+            <textarea class="form-control" rows="6" name="comments" id="comment">{{job.comments}}</textarea>
+        </div>
+    </div>
+
+    <div class="form-group col-sm-10">
+        <label class="col-sm-2 control-label" for="hash">Hash:</label>
+        <div class="col-sm-10">
+            <input type="text" value="{% if job.hash %}{{job.hash}}{% else %}{{hash}}{% endif %}" class="form-control" name="hash" id="hash" readonly>
+        </div>
+    </div>
+
+    <div class="form-group col-sm-10">
+        <label class="col-sm-2 control-label" for="sharedKey">Shared key:</label>
+        <div class="col-sm-10">
+            <input type="text" value="{% if job.hash %}{{job.sharedkey}}{% else %}{{sharedkey}}{% endif %}" class="form-control" name="sharedkey" id="sharedKey" readonly>
         </div>
     </div>
 

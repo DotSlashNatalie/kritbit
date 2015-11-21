@@ -3,7 +3,9 @@
 class job extends base {
     public function add() {
         if (!isset($_POST["jobName"])) {
-            echo $this->loadRender("add.html");
+	        $sharedkey = bin2hex(openssl_random_pseudo_bytes(16, $bool));
+			$hash = bin2hex(openssl_random_pseudo_bytes(32, $bool));
+            echo $this->loadRender("add.html", ["hash" => $hash, "sharedkey" => $sharedkey]);
         } else {
             $data = $_POST;
             $data["user_id"] = $this->user->id;
@@ -36,6 +38,21 @@ class job extends base {
         } else {
             header("Location: /");
         }
+    }
+
+    public function force($id) {
+	    $job = \application\models\Jobs::getByField("id", $id);
+	    if ($job && $job[0]->user_id == $this->user->id) { //secuirty check
+		    if ($job[0]->force_run == 1) {
+			    $job[0]->force_run = 0;
+		    } else {
+			    $job[0]->force_run = 1;
+		    }
+		    $job[0]->save();
+		    header("Location: /");
+	    } else {
+		    header("Location: /");
+	    }
     }
 
 }

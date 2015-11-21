@@ -24,20 +24,8 @@ abstract class base extends \system\engine\HF_Controller {
 	}
 
 	protected function setupUser() {
-		if (isset($_COOKIE["session"])) {
-			$validSession = Sessions::getByField("sessionid", $_COOKIE["session"]);
-			if ($validSession) {
-				try {
-					$this->session = $validSession[0];
-					$this->sessionData = json_decode($this->session->data);
-					if ($this->sessionData == null) {
-						return;
-					}
-					$this->user = \application\models\Users::getByField("id", $this->sessionData->userId)[0];
-				} catch (\Exception $e) {
-				}
-			} else {
-			}
+		if ($this->sessionData) {
+			$this->user = \application\models\Users::getByField("id", $this->sessionData->userId)[0];
 		}
 	}
 
@@ -63,12 +51,25 @@ abstract class base extends \system\engine\HF_Controller {
 		return false;
 	}
 
-	protected function login() {
-	   if (!$this->user) {
-		header("Location: /login");
-
-	   } else {
-		   $bool = true;
+	protected function setupSession() {
+		if (isset($_COOKIE["session"])) {
+			$validSession = Sessions::getByField("sessionid", $_COOKIE["session"]);
+			if ($validSession) {
+				try {
+					$this->session = $validSession[0];
+					$this->sessionData = json_decode($this->session->data);
+				} catch (\Exception $e) { }
+			} else {
+				$bytes = openssl_random_pseudo_bytes(10, $bool);
+				$sessionId = bin2hex($bytes);
+				$this->session = new Sessions();
+				$this->session->ip = $_SERVER["REMOTE_ADDR"];
+				$this->session->userAgent = $_SERVER["HTTP_USER_AGENT"];
+				$this->session->sessionid = $sessionId;
+				$this->session->save();
+				setcookie("session", $sessionId, 2147483647, "/");
+			}
+		} else {
 			$bytes = openssl_random_pseudo_bytes(10, $bool);
 			$sessionId = bin2hex($bytes);
 			$this->session = new Sessions();
@@ -76,7 +77,13 @@ abstract class base extends \system\engine\HF_Controller {
 			$this->session->userAgent = $_SERVER["HTTP_USER_AGENT"];
 			$this->session->sessionid = $sessionId;
 			$this->session->save();
-			setcookie("session", $sessionId, 2147483647);
+			setcookie("session", $sessionId, 2147483647, "/");
+		}
+	}
+
+	protected function login() {
+		if (!$this->user) {
+			header("Location: /login");
 		}
 	}
 
@@ -101,8 +108,9 @@ abstract class base extends \system\engine\HF_Controller {
 			\vendor\DB\DB::$c = $this->pdo;
 		}
 
+		$this->setupSession();
 		$this->setupUser();
-		if ($this->loginRequired) {
+		if ($this->loginRequired && !$this->user) {
 			$this->login();
 		}
 	}
