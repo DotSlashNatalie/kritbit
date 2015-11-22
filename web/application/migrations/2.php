@@ -14,10 +14,10 @@ DB::query("CREATE TABLE jobs (
           last_result INTEGER,
           hash VARCHAR(255),
           sharedkey VARCHAR(32),
-          view_private INTEGER,
+          view_private TINYINT(1),
           user_id INTEGER,
           comments TEXT,
-          force_run INTEGER
+          force_run TINYINT(1)
 );");
 
 DB::query("INSERT INTO jobs VALUES (null, 'test', 1, 'TESTING', '*/5 * * * *', 'TESTING', '2015-01-01', 0, '123', '123', 0, 1, 'TEST COMMENT', 0)");
