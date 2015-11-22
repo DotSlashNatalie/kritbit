@@ -106,8 +106,7 @@ total = time.time() - start_time
 nonce = ''.join(random.SystemRandom().choice(string.hexdigits + string.digits) for _ in range(10))
 message = {}
 message["nonce"] = nonce
-message["message"] = json.dumps({"output":out, "time_taken": total, "result": exitcode})
+message["message"] = json.dumps({"output":out, "time_taken": total, "result": 1})
 message["signature"] = hashlib.sha256(message["message"] + nonce + HASH).hexdigest()
-print hashlib.sha256(message["message"]).hexdigest()
 message["message"] = encrypt(SHARED_KEY, message["message"])
 print curl_post(URL, {"data": json.dumps(message)}).getvalue()

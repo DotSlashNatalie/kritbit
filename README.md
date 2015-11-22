@@ -32,5 +32,6 @@ Kritbit uses the following projects
 - [jQuery](https://jquery.com/)
 - [jQuery confirm](http://craftpip.github.io/jquery-confirm/)
 - [bootstrap fullscreen](http://craftpip.github.io/bootstrap-fullscreen-select/)
+- [dynatable](http://www.dynatable.com/)
 
 Made with <3 by Nathan Adams
