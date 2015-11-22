@@ -47,11 +47,7 @@
         </tr>
         {% endif %}
         {% for history in histories %}
-        {% if history.result != 0 %}
-        <tr class="danger">
-        {% else %}
-        <tr>
-        {% endif %}
+        <tr class="{{history.getTRClass}}">
             <td><a class="btn btn-default" href="/history/log/{{job.id}}/{{history.id}}/" role="button">View</a></td>
             <td>{{history.run_date}}</td>
             <td>{{history.time_taken}}</td>

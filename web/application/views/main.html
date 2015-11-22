@@ -22,11 +22,7 @@
     </thead>
     <tbody>
     {% for job in jobs %}
-    {% if job.last_result != 0 %}
-        <tr class="danger">
-    {% else %}
-        <tr>
-    {% endif %}
+        <tr class="{{job.getTRClass}}">
             <td><a class="btn btn-default" href="/job/edit/{{job.id}}" role="button">Edit</a></td>
             <td>{{job.jobName}}</td>
             <td>{{job.getRunType}}</td>

@@ -9,7 +9,7 @@ class Jobs extends \system\engine\HF_Model {
     public $cron;
     public $failScript;
     public $last_run;
-    public $last_result;
+    public $last_result = null;
     public $user_id;
     public $hash;
     public $sharedkey;
@@ -39,4 +39,14 @@ class Jobs extends \system\engine\HF_Model {
         }
 
     }
+
+	public function getTRClass() {
+		if ($this->last_run == "" || $this->last_result == null) {
+			return "";
+		} elseif ($this->last_result == 0) {
+			return "success";
+		} else {
+			return "danger";
+		}
+	}
 }
