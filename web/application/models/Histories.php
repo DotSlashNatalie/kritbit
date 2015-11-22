@@ -8,4 +8,5 @@ class Histories extends \system\engine\HF_Model {
     public $run_date;
     public $time_taken;
     public $result;
+    public $nonce;
 }

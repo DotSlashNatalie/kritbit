@@ -30,7 +30,7 @@
             <td>{{job.getLastRun}}</td>
             <td>{{job.last_result}}</td>
             <td><a class="btn btn-default" href="/history/view/{{job.jobName}}-{{job.id}}" role="button">History</a></td>
-            <td><a class="btn btn-danger" href="/job/delete/{{job.id}}" role="button">Delete</a></td>
+            <td><a class="btn btn-danger btn-delete" href="/job/delete/{{job.id}}" role="button">Delete</a></td>
             {% if job.force_run == 1 %}
             <td><a class="btn btn-warning" href="/job/force/{{job.id}}" role="button">Enabled</a></td>
             {% else %}
@@ -40,5 +40,14 @@
     {% endfor %}
     </tbody>
 </table>
+
+<script type="text/javascript">
+    $(function () {
+        $('.btn-delete').confirm({
+            title: 'Confirm',
+            content: "Are you sure you want to delete this job?"
+        });
+    });
+</script>
 
 {% endblock %}

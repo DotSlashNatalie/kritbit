@@ -24,24 +24,36 @@ class service extends base {
 	 */
 	public function upload($jobId) {
 		if ($jobId && is_numeric($jobId)) {
-			try {
-				/** @var \application\models\Jobs $job */
-				$job = \application\models\Jobs::getByField("id", $jobId)[0];
-				//decrypt message
-				$data = json_decode($_POST["data"], true);
-				$rawMessage = aes_decrypt($job->sharedkey, $data["message"]);
-			} catch (\Exception $e) {
-				echo $e;
-				exit(1);
-			}
+
+			/** @var \application\models\Jobs $job */
+			$job = \application\models\Jobs::getByField("id", $jobId)[0];
+			//decrypt message
+			$data = json_decode($_POST["data"], true);
+			$rawMessage = aes_decrypt($job->sharedkey, $data["message"]);
+			/*$rawMessage = str_replace("\\n", "", $rawMessage);
+			$rawMessage = str_replace("\\r", "", $rawMessage);
+			$rawMessage = str_replace("\\", "", $rawMessage);*/
+			$rawMessage = preg_replace('/[^(\x20-\x7F)]*/','', $rawMessage);
+
+
+
 
 			// if decryption was successful -
 			// check signature
 			if (hash("sha256", $rawMessage . $data["nonce"] . $job->hash) == $data["signature"]) {
 				// the message is verified
-				$messageJson = json_decode($rawMessage);
-				$history = \application\models\Histories::create($messageJson);
-				$history->jobs_id = $job->id;
+				$message = json_decode($rawMessage, true);
+				$replayAttackCheck = DB::fetch("SELECT id FROM histories WHERE jobs_id = ? AND nonce = ?", [$job->id, $data["nonce"]]);
+				if (count($replayAttackCheck) == 0) {
+					$history = \application\models\Histories::create($message);
+					$history->run_date = date("Y-m-d H:i:s");
+					$history->jobs_id = $job->id;
+					$history->nonce = $data["nonce"];
+					$history->save();
+					$job->last_result = $history->result;
+					$job->last_run = $history->run_date;
+					$job->save();
+				}
 			}
 		}
 	}

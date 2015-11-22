@@ -28,3 +28,9 @@ Kritbit uses the following projects
 - [CRON expression](https://github.com/mtdowling/cron-expression) - MIT
 - [phpoauthlib2](https://srchub.org/p/phpoauthlib2/) - MIT
 - [stacktraceprint](http://stackoverflow.com/a/4282133/195722)
+- [Twitter Bootstrap](http://getbootstrap.com/2.3.2/)
+- [jQuery](https://jquery.com/)
+- [jQuery confirm](http://craftpip.github.io/jquery-confirm/)
+- [bootstrap fullscreen](http://craftpip.github.io/bootstrap-fullscreen-select/)
+
+Made with <3 by Nathan Adams

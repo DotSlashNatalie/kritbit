@@ -21,8 +21,17 @@ except ImportError:
     except ImportError:
         from io import StringIO
 
+#
+#  REPLACE THESE VALUES
+#
+
 SHARED_KEY = ""
 HASH = ""
+URL = ""
+
+#
+#
+#
 
 # source http://stackoverflow.com/a/8232171/195722
 KEY_SIZE = 16
@@ -99,7 +108,6 @@ message = {}
 message["nonce"] = nonce
 message["message"] = json.dumps({"output":out, "time_taken": total, "result": exitcode})
 message["signature"] = hashlib.sha256(message["message"] + nonce + HASH).hexdigest()
-print encrypt(SHARED_KEY, "test")
+print hashlib.sha256(message["message"]).hexdigest()
 message["message"] = encrypt(SHARED_KEY, message["message"])
-print json.dumps(message)
-print curl_post("http://192.168.128.36:8080/service/upload/5/", {"data": json.dumps(message)}).getvalue()
+print curl_post(URL, {"data": json.dumps(message)}).getvalue()
