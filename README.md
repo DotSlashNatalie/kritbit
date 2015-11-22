@@ -19,7 +19,7 @@ Kritbit is designed to be simple and flexible. It makes no assumptions about you
 
 # Authentication/Authorization
 
-Each user logs in using OAuth (see below for setup) and can only edit jobs that they have created (there are no groups or way of "granting" permission). A job history can have a flag to allow anonymous users to view the history. However, kritbit does not censor the output so be careful allowing people to view history of jobs that may contain sensitive information.
+Each user logs in using OAuth (see below for setup) and can only edit jobs that they have created (there are no groups or way of "granting" permission). A user MUST be pre-registered into the users table otherwise they will not be able to login and create jobs (this is done to prevent abuse - though you can easily change this behavior). A job history can have a flag to allow anonymous users to view the history. However, kritbit does not censor the output so be careful allowing people to view history of jobs that may contain sensitive information.
 
 # Install
 

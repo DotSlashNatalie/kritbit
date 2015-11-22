@@ -116,5 +116,12 @@ abstract class base extends \system\engine\HF_Controller {
 		if ($this->loginRequired && !$this->user) {
 			$this->login();
 		}
+
+
+		if (isset($_POST["csrfmiddlewaretoken"])) {
+			if ($_POST["csrfmiddlewaretoken"] != $_COOKIE["csrftoken"]) {
+				throw new \Exception("CSRF tokens did not match");
+			}
+		}
 	}
 }
