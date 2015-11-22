@@ -17,6 +17,45 @@ Note: Kritbit originally had 3 purposes - one of them being running commands rem
 
 Kritbit is designed to be simple and flexible. It makes no assumptions about your security and only provides minimal security procedures. I am not a crypto expert - but I make tools that work. So while I cannot guarantee that big brother won't be able to decrypt messages from external services - it should be good enough for most implementations. So please, if you find that the crypto security is less than perfect I accept patches of any size, creed, or color. The encryption technology used isn't meant to prevent a guy with a Beowulf cluster from cracking your message - but rather preventing some script kiddie with Firesheep from seeing what you are doing.
 
+# Authentication/Authorization
+
+Each user logs in using OAuth (see below for setup) and can only edit jobs that they have created (there are no groups or way of "granting" permission). A job history can have a flag to allow anonymous users to view the history. However, kritbit does not censor the output so be careful allowing people to view history of jobs that may contain sensitive information.
+
+# Install
+
+1. Copy web/application/config.dist.php to web/application/config.php
+2. Edit values for your environment[1]
+3. Run `php migrations.php run` to setup your database
+4. Run `php kritbit.php all-clear` to remove all sample data populated from the migrations
+5. Run `php kritbit.php adduser you@gmail.com` to add yourself as an authorized user
+6. Navigate to http://example.com/kritbit and you should be prompted to login with Google
+
+[1] - Kritbit is designed to authenticate through Google OAuth. Since Kritbit uses an OAuth library you can really use any OAuth provider such as Facebook (which is included).
+
+You must remember to change the REDIRECT_URI in config.php. If you don't want to use OAuth for login but want local users or Apache basic auth - all you have to do is modify login.php to read the user from those sources (which should be pretty simple as the login code there is very simple).
+
+To get OAuth keys needed for Google Auth you need to create a project on [Google's Developers Dashboard](https://console.developers.google.com/), which is free.
+
+kritbit can run on SQLite - however if you are going to deal with any volume you should use MySQL/MaraiaDB (other databases can be used - but you will need to modify some code).
+
+To use MySQL/MaraiaDB specify in config.php (MariaDB is a drop-in replacement for MySQL so it doesn't matter if you specify MySQL):
+
+    $config["DATABASE_TYPE"] = "MySQL";
+    $config['MYSQL_DBNAME'] = "dbname";
+    $config['MYSQL_HOST'] = "localhost";
+    $config['MYSQL_USER'] = "user";
+    $config['MYSQL_PASS'] = "pass";
+    
+# Long-term TODO
+
+- Provide a way to offer more customization for viewing job information. Right now it's very generic - but it might be useful to be able to parse output and present custom columns or other data.
+- Permission matrix allowing people to grant fine permissions to jobs and job history
+    
+
+# Patches
+
+Patches are welcome of any kind. But please do note that your code will be integrated into the project under the MIT license. Mention to your contribution may not appear in the code or file. But we can certainly make mention on the README describing your contribution.
+    
 # Attributions
 
 Kritbit uses the following projects
@@ -33,5 +72,6 @@ Kritbit uses the following projects
 - [jQuery confirm](http://craftpip.github.io/jquery-confirm/)
 - [bootstrap fullscreen](http://craftpip.github.io/bootstrap-fullscreen-select/)
 - [dynatable](http://www.dynatable.com/)
+- [is_cli](http://stackoverflow.com/a/25967493/195722)
 
 Made with <3 by Nathan Adams

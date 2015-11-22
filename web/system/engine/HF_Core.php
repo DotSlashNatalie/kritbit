@@ -283,27 +283,30 @@ class HF_Core
 		}
 	}
 
-	public function runMigrations() {
-        global $argv;
+	public function setupDatabaseConnection() {
 		switch($this->config["DATABASE_TYPE"]) {
 			case "SQLITE":
 				DB::$c = new \PDO("sqlite:" . $this->config["DATABASE_FILE"]);
 				break;
 			case "MySQL":
-                DB::$c = new \PDO(
-                    "mysql:dbname={$this->config['MYSQL_DBNAME']};host={$this->config['MYSQL_HOST']}",
-                    $this->config['MYSQL_USER'],
-                    $this->config['MYSQL_PASS'],
-                    array(
-                        \PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8",
-                        \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_OBJ,
-                        \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION
-                    )
-                );
+				DB::$c = new \PDO(
+						"mysql:dbname={$this->config['MYSQL_DBNAME']};host={$this->config['MYSQL_HOST']}",
+						$this->config['MYSQL_USER'],
+						$this->config['MYSQL_PASS'],
+						array(
+								\PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8",
+								\PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_OBJ,
+								\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION
+						)
+				);
 				break;
 		}
-        DB::$c->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+		DB::$c->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+	}
 
+	public function runMigrations() {
+        global $argv;
+		$this->setupDatabaseConnection();
         DB::query("CREATE TABLE IF NOT EXISTS migrations (
 							  id INTEGER PRIMARY KEY AUTOINCREMENT,
 							  migration INTEGER,

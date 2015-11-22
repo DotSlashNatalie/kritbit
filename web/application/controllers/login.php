@@ -15,7 +15,7 @@ class login extends base {
         $authProvider = new GoogleAuthProvider($_GET, [
             "client_id" => $this->config["GOOGLE_OAUTH_ID"],
             "client_secret" => $this->config["GOOGLE_OAUTH_SECRET"],
-            "redirect_uri" => "http://localhost:8080/login"
+            "redirect_uri" => $this->config["REDIRECT_URI"]
         ]);
         $oauth = new OAuth($authProvider, $_GET);
 
