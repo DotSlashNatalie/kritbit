@@ -308,7 +308,7 @@ class HF_Core
         global $argv;
 		$this->setupDatabaseConnection();
         DB::query("CREATE TABLE IF NOT EXISTS migrations (
-							  id INTEGER PRIMARY KEY AUTOINCREMENT,
+							  id INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
 							  migration INTEGER,
 							  ran_at DATETIME
 				)");
