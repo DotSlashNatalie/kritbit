@@ -13,4 +13,4 @@ DB::query("CREATE TABLE histories (
             nonce VARCHAR(255)
   );");
 
-DB::query("INSERT INTO histories VALUES (null, 'THIS IS ONLY A TEST', 1, '2015-01-01', 10, 0, 'ABC')");
+//DB::query("INSERT INTO histories VALUES (null, 'THIS IS ONLY A TEST', 1, '2015-01-01', 10, 0, 'ABC')");

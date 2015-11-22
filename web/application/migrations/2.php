@@ -20,5 +20,5 @@ DB::query("CREATE TABLE jobs (
           force_run TINYINT(1)
 );");
 
-DB::query("INSERT INTO jobs VALUES (null, 'test', 1, 'TESTING', '*/5 * * * *', 'TESTING', '2015-01-01', 0, '123', '123', 0, 1, 'TEST COMMENT', 0)");
-DB::query("INSERT INTO jobs VALUES (null, 'test2', 1, 'TESTING', '*/5 * * * *', 'TESTING', '2015-01-01', 0, '321', '321', 1, 1, 'TEST COMMENT2', 0)");
+//DB::query("INSERT INTO jobs VALUES (null, 'test', 1, 'TESTING', '*/5 * * * *', 'TESTING', '2015-01-01', 0, '123', '123', 0, 1, 'TEST COMMENT', 0)");
+//DB::query("INSERT INTO jobs VALUES (null, 'test2', 1, 'TESTING', '*/5 * * * *', 'TESTING', '2015-01-01', 0, '321', '321', 1, 1, 'TEST COMMENT2', 0)");

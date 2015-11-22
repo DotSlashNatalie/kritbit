@@ -17,5 +17,5 @@ DB::query("CREATE TABLE users (
     email VARCHAR(255)
 )");
 
-echo "Adding user " . PHP_EOL;
-DB::insert("users", ["email" => "adamsna@datanethost.net"]);
+//echo "Adding user " . PHP_EOL;
+//DB::insert("users", ["email" => "adamsna@datanethost.net"]);
