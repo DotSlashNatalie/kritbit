@@ -4,7 +4,7 @@ use \vendor\DB\DB;
 
 echo "Creating job table..." . PHP_EOL;
 DB::query("CREATE TABLE jobs (
-          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          id INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
           jobName VARCHAR(255),
           runType VARCHAR(255),
           runScript TEXT,

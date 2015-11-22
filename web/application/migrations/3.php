@@ -4,7 +4,7 @@ use \vendor\DB\DB;
 
 echo "Creating history table...";
 DB::query("CREATE TABLE histories (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            id INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
             output TEXT,
             jobs_id INTEGER,
             run_date DATETIME,

@@ -4,7 +4,7 @@ use \vendor\DB\DB;
 
 echo "Creating session table..." . PHP_EOL;
 DB::query("CREATE TABLE sessions (
-          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          id INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
           sessionid VARCHAR(255),
           ip VARCHAR(255),
           userAgent VARCHAR(255),
@@ -13,7 +13,7 @@ DB::query("CREATE TABLE sessions (
 
 echo "Creating users table..." . PHP_EOL;
 DB::query("CREATE TABLE users (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
     email VARCHAR(255)
 )");
 
