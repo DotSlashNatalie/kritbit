@@ -157,6 +157,9 @@ class DB
 			case "SQLITE":
 				return self::fetch("PRAGMA table_info($table)", null, 1);
 				break;
+			case "MySQL":
+				return self::fetch("DESC $table", null, 0);
+				break;
 		}
 	}
 }
