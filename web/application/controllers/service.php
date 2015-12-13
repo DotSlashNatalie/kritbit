@@ -89,9 +89,10 @@ class service extends base {
 								$returnVar = 0;
 
 								$jobName = (isset($job->jobName) && !empty($job->jobName) && $job->jobName) ? $job->jobName : "----NOT-SET----";
-								$dir = __DIR__ . "/../tmp/" . $jobName;
+								$dir = __DIR__ . DIRECTORY_SEPARATOR .".." . DIRECTORY_SEPARATOR . "tmp" . DIRECTORY_SEPARATOR . $jobName;
 								if (is_dir($dir)) {
-									$this->rrmdir($dir . "/");
+									$this->rrmdir($dir . DIRECTORY_SEPARATOR);
+									mkdir($dir, 0777, true);
 								} else {
 									mkdir($dir, 0777, true);
 								}
@@ -100,7 +101,7 @@ class service extends base {
 								// grumble grumble something something windows
 								if (stripos(php_uname("s"), "Win") !== false) {
 									file_put_contents("$dir/kritscript.bat", $job->runScript);
-									exec("c:\\windows\\system32\\cmd.exe /c $dir/kritscript.bat", $output, $returnVar);
+									exec("c:\\windows\\system32\\cmd.exe /c $dir\kritscript.bat", $output, $returnVar);
 								} else {
 									file_put_contents("$dir/kritscript", $job->runScript);
 									chmod("$dir/kritscript", 0777);
@@ -112,7 +113,7 @@ class service extends base {
 								if ($returnVar != 0) {
 									if (stripos(php_uname("s"), "Win") !== false) {
 										file_put_contents("$dir/failkritscript.bat", $job->failScript);
-										exec("c:\\windows\\system32\\cmd.exe /c $dir/failkirtscript.bat");
+										exec("c:\\windows\\system32\\cmd.exe /c $dir\failkirtscript.bat");
 									} else {
 										file_put_contents("$dir/failkritscript", $job->failScript);
 										chmod("$dir/failkritscript", 0777);
