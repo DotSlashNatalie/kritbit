@@ -58,6 +58,22 @@ class service extends base {
 		}
 	}
 
+	// http://us3.php.net/manual/en/function.rmdir.php#117354
+	private function rrmdir($dir) {
+		if (is_dir($dir)) {
+			$objects = scandir($dir);
+			foreach ($objects as $object) {
+				if ($object != "." && $object != "..") {
+					if (is_dir($dir."/".$object))
+						rrmdir($dir."/".$object);
+					else
+						unlink($dir."/".$object);
+				}
+			}
+			rmdir($dir);
+		}
+	}
+
 	public function run() {
 		if (in_array($_SERVER["REMOTE_ADDR"], $this->config["ACCEPTED_IPS"])) { // not very secure - but worst case they fire off the run early
 			if (!file_exists("/tmp/kritbot")) {
@@ -72,27 +88,35 @@ class service extends base {
 								$output = [];
 								$returnVar = 0;
 
+								$jobName = (isset($job->jobName) && !empty($job->jobName) && $job->jobName) ? $job->jobName : "----NOT-SET----";
+								$dir = __DIR__ . "/../tmp/" . $jobName;
+								if (is_dir($dir)) {
+									$this->rrmdir($dir . "/");
+								} else {
+									mkdir($dir, 0777, true);
+								}
+
 								$start = microtime(true);
 								// grumble grumble something something windows
 								if (stripos(php_uname("s"), "Win") !== false) {
-									file_put_contents("/tmp/kritscript.bat", $job->runScript);
-									exec("c:\\windows\\system32\\cmd.exe /c c:/tmp/kritscript.bat", $output, $returnVar);
+									file_put_contents("$dir/kritscript.bat", $job->runScript);
+									exec("c:\\windows\\system32\\cmd.exe /c $dir/kritscript.bat", $output, $returnVar);
 								} else {
-									file_put_contents("/tmp/kritscript", $job->runScript);
-									exec("/tmp/kritscript", $output, $returnVar);
-									chmod("/tmp/kritscript", 0777);
+									file_put_contents("$dir/kritscript", $job->runScript);
+									chmod("$dir/kritscript", 0777);
+									exec("$dir/kritscript", $output, $returnVar);
 								}
 								$end = microtime(true);
 								$delta = $end - $start;
 								$scriptOutput = implode("\n", $output);
 								if ($returnVar != 0) {
 									if (stripos(php_uname("s"), "Win") !== false) {
-										file_put_contents("/tmp/kritscript.bat", $job->failScript);
-										exec("c:\\windows\\system32\\cmd.exe /c c:/tmp/kirtscript.bat");
+										file_put_contents("$dir/failkritscript.bat", $job->failScript);
+										exec("c:\\windows\\system32\\cmd.exe /c $dir/failkirtscript.bat");
 									} else {
-										file_put_contents("/tmp/kritscript", $job->failScript);
-										exec("/tmp/kritscript", $output, $returnVar);
-										chmod("/tmp/kritscript", 0777);
+										file_put_contents("$dir/failkritscript", $job->failScript);
+										chmod("$dir/failkritscript", 0777);
+										exec("$dir/failkritscript", $output, $returnVar);
 									}
 								}
 								$historyObj = new \application\models\Histories();
