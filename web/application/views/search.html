@@ -24,8 +24,8 @@
     {% endif %}
     {% for history in histories %}
     <tr>
-        <td><a href="/history/view/{{history.jobName}}-{{history.job_id}}">{{history.jobName}}</a></td>
-        <td><a class="btn btn-default" href="/history/log/{{history.job_id}}/{{history.id}}/" role="button">View</a></td>
+        <td><a href="./history/view/{{history.jobName}}-{{history.job_id}}">{{history.jobName}}</a></td>
+        <td><a class="btn btn-default" href="./history/log/{{history.job_id}}/{{history.id}}/" role="button">View</a></td>
         <td>{{history.run_date}}</td>
         <td>{{history.time_taken}}</td>
         <td>{{history.result}}</td>

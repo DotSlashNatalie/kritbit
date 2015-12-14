@@ -48,7 +48,7 @@
         {% endif %}
         {% for history in histories %}
         <tr class="{{history.getTRClass}}">
-            <td><a class="btn btn-default" href="/history/log/{{job.id}}/{{history.id}}/" role="button">View</a></td>
+            <td><a class="btn btn-default" href="./history/log/{{job.id}}/{{history.id}}/" role="button">View</a></td>
             <td>{{history.run_date}}</td>
             <td>{{history.time_taken}}</td>
             <td>{{history.result}}</td>

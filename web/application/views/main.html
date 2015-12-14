@@ -23,18 +23,18 @@
     <tbody>
     {% for job in jobs %}
         <tr class="{{job.getTRClass}}">
-            <td><a class="btn btn-default" href="/job/edit/{{job.id}}" role="button">Edit</a></td>
+            <td><a class="btn btn-default" href="./job/edit/{{job.id}}" role="button">Edit</a></td>
             <td>{{job.jobName}}</td>
             <td>{{job.getRunType}}</td>
             <td>{{job.cron}}</td>
             <td>{{job.getLastRun}}</td>
             <td>{{job.last_result}}</td>
-            <td><a class="btn btn-default" href="/history/view/{{job.jobName}}-{{job.id}}" role="button">History</a></td>
+            <td><a class="btn btn-default" href="./history/view/{{job.jobName}}-{{job.id}}" role="button">History</a></td>
             <td><a class="btn btn-danger btn-delete" href="/job/delete/{{job.id}}" role="button">Delete</a></td>
             {% if job.force_run == 1 %}
-            <td><a class="btn btn-warning" href="/job/force/{{job.id}}" role="button">Enabled</a></td>
+            <td><a class="btn btn-warning" href="./job/force/{{job.id}}" role="button">Enabled</a></td>
             {% else %}
-            <td><a class="btn btn-success" href="/job/force/{{job.id}}" role="button">Disabled</a></td>
+            <td><a class="btn btn-success" href="./job/force/{{job.id}}" role="button">Disabled</a></td>
             {% endif %}
         </tr>
     {% endfor %}
