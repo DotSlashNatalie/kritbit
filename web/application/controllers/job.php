@@ -25,7 +25,7 @@ class job extends base {
             $data = $_POST;
             $data["user_id"] = $this->user->id;
             \application\models\Jobs::create($data)->save();
-            header("Location: /");
+            header("Location: /kritbit");
         }
     }
 
@@ -35,12 +35,12 @@ class job extends base {
         if ($job && $job[0]->user_id == $this->user->id) { //secuirty check
             if (isset($_POST["jobName"])) {
                 $job[0]->update($_POST)->save();
-                header("Location: /");
+                header("Location: /kritbit");
             } else {
                 echo $this->loadRender("add.html", ["job" => $job[0]]);
             }
         } else {
-            header("Location: /");
+            header("Location: /kritbit");
         }
     }
 
@@ -49,9 +49,9 @@ class job extends base {
         if ($job && $job[0]->user_id == $this->user->id) { //secuirty check
             $job[0]->deleteRelated(["histories"]);
             $job[0]->delete();
-            header("Location: /");
+            header("Location: /kritbit");
         } else {
-            header("Location: /");
+            header("Location: /kritbit");
         }
     }
 
@@ -64,9 +64,9 @@ class job extends base {
 			    $job[0]->force_run = 1;
 		    }
 		    $job[0]->save();
-		    header("Location: /");
+		    header("Location: /kritbit");
 	    } else {
-		    header("Location: /");
+		    header("Location: /kritbit");
 	    }
     }
 

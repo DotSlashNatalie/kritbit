@@ -48,7 +48,7 @@ class history extends base
 			    }
 		    }
 	    } catch (\Exception $e) {
-		    header("Location: /");
+		    header("Location: /kritbit");
 	    }
     }
 
@@ -62,7 +62,7 @@ class history extends base
 			    echo $historyArr[0]->output;
 		    }
 	    } catch (\Exception $e) {
-		    header("Location: /");
+		    header("Location: /kritbit");
 	    }
     }
 }

@@ -33,7 +33,7 @@ class login extends base {
             $this->session->data = json_encode(["userId" => $user->id]);
             $this->session->save();
             $this->sessionData = $this->session->data;
-            header("Location: /");
+            header("Location: /kritbit");
         } else {
             header("Location: " . $check);
         }
