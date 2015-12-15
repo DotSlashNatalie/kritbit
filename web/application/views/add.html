@@ -107,6 +107,7 @@
 <script type="text/javascript">
     $(function () {
         $('#dropdown1 li').on('click', function(){
+            $(this).preventDefault();
             $("#runType").val($(this).data("type"));
             $("#selectedType").text($(this).text());
             //$('#datebox').val($(this).text());
