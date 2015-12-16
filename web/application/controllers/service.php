@@ -26,11 +26,13 @@ class service extends base {
 		if ($jobId && is_numeric($jobId)) {
 
 			/** @var \application\models\Jobs $job */
-			$job = \application\models\Jobs::getByField("id", $jobId)[0];
+			$job = \application\models\Jobs::getByField("id", $jobId);
 			if (!$job) {
 				echo "";
 				return;
 			}
+
+			$job = $job[0];
 			//decrypt message
 			$data = json_decode($_POST["data"], true);
 			$rawMessage = aes_decrypt($job->sharedkey, $data["message"]);
