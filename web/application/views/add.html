@@ -106,11 +106,10 @@
 
 <script type="text/javascript">
     $(function () {
-        $('#dropdown1 li').on('click', function(){
-            $(this).preventDefault();
+        $('#dropdown1 li').on('click', function(e){
+            e.preventDefault();
             $("#runType").val($(this).data("type"));
             $("#selectedType").text($(this).text());
-            //$('#datebox').val($(this).text());
         });
         $("#private").on("change", function () {
             if ($(this).is(":checked")) {
