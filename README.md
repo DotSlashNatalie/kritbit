@@ -61,6 +61,28 @@ For example:
     http://127.0.0.1/kritbit/service/run/
     
 And kritbit will run through the jobs that are marked to be ran by kritbit and analyse the cron script to determine if it needs to be ran and run it.
+
+# Sending script runs to kritbit
+
+There is provided runcommand Python script in the scripts directory. This should be modified to fill in data for your script. This will wrap the encryption and data structure in an easy to use library.
+
+To use it just invoke it like so:
+
+    /usr/bin/python runcommand.py '/bin/bash script.sh'
+    
+If you want to make it more generic you may replace SHARED_KEY and HASH variables with the following:
+
+    SHARED_KEY = sys.argv[1]
+    HASH = sys.argv[2]
+    URL = "https://<your IP or domain>/kritbit/service/upload/" + sys.argv[3] + "/"
+
+Then the command would be similar to the following:
+
+    /usr/share/kritbit/runcommand.py '<shared key>' <hash> <id_of_project> '/bin/bash /root/downloadrouterconfig.sh'
+
+ie:
+
+    /usr/share/kritbit/runcommand.py '#$FDSFA#$' eeeffff3434343 7 '/bin/bash /root/downloadrouterconfig.sh'
     
 # Long-term TODO
 
@@ -74,7 +96,7 @@ Patches are welcome of any kind. But please do note that your code will be integ
     
 # Attributions
 
-Kritbit uses the following projects
+Kritbit is licensed under the MIT uses the following projects
 
 - [Haplous Framework](https://srchub.org/p/haplousframework/) - MIT
 - [h2o template engine](https://github.com/speedmax/h2o-php) - MIT
@@ -89,5 +111,9 @@ Kritbit uses the following projects
 - [bootstrap fullscreen](http://craftpip.github.io/bootstrap-fullscreen-select/) - MIT
 - [dynatable](http://www.dynatable.com/) - AGPL
 - [is_cli](http://stackoverflow.com/a/25967493/195722)
+
+# Donations
+
+Donations can be accepted through [Paypal](paypal.me/NateAdams) or through BTC: [1F3NzZXUm4sATgCs3sgTqXHwrAqM4JnGVS](bitcoin:1F3NzZXUm4sATgCs3sgTqXHwrAqM4JnGVS)
 
 Made with <3 by Nathan Adams
