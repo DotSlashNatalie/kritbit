@@ -114,6 +114,6 @@ Kritbit is licensed under the MIT uses the following projects
 
 # Donations
 
-Donations can be accepted through [Paypal](paypal.me/NateAdams) or through BTC: [1F3NzZXUm4sATgCs3sgTqXHwrAqM4JnGVS](bitcoin:1F3NzZXUm4sATgCs3sgTqXHwrAqM4JnGVS)
+Donations can be accepted through [Paypal](https://www.paypal.me/NateAdams) or through BTC: [1F3NzZXUm4sATgCs3sgTqXHwrAqM4JnGVS](bitcoin:1F3NzZXUm4sATgCs3sgTqXHwrAqM4JnGVS)
 
 Made with <3 by Nathan Adams
