@@ -27,6 +27,10 @@ class service extends base {
 
 			/** @var \application\models\Jobs $job */
 			$job = \application\models\Jobs::getByField("id", $jobId)[0];
+			if (!$job) {
+				echo "";
+				return;
+			}
 			//decrypt message
 			$data = json_decode($_POST["data"], true);
 			$rawMessage = aes_decrypt($job->sharedkey, $data["message"]);
