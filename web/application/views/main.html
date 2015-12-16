@@ -43,11 +43,12 @@
 
 <script type="text/javascript">
     $(function () {
-        $('.btn-delete').confirm({
-            title: 'Confirm',
-            content: "Are you sure you want to delete this job?"
+        $('.btn-delete').each(function () {
+           $(this).confirm({
+               title: 'Confirm',
+               content: "Are you sure you want to delete this job?"
+           });
         });
-
     });
 </script>
 
