@@ -46,6 +46,22 @@ To use MySQL/MaraiaDB specify in config.php (MariaDB is a drop-in replacement fo
     $config['MYSQL_USER'] = "user";
     $config['MYSQL_PASS'] = "pass";
     
+# Running automated service
+
+In your config.php you need to add/modify ACCEPTED_IPS :
+
+    $config["ACCEPTED_IPS"] = ["127.0.0.1", "::1"];
+    
+Then write a cron that runs every minute to curl/wget this url:
+
+    http://<ip or domain>/service/run/
+    
+For example:
+
+    http://127.0.0.1/kritbit/service/run/
+    
+And kritbit will run through the jobs that are marked to be ran by kritbit and analyse the cron script to determine if it needs to be ran and run it.
+    
 # Long-term TODO
 
 - Provide a way to offer more customization for viewing job information. Right now it's very generic - but it might be useful to be able to parse output and present custom columns or other data.
@@ -68,10 +84,10 @@ Kritbit uses the following projects
 - [phpoauthlib2](https://srchub.org/p/phpoauthlib2/) - MIT
 - [stacktraceprint](http://stackoverflow.com/a/4282133/195722)
 - [Twitter Bootstrap](http://getbootstrap.com/2.3.2/)
-- [jQuery](https://jquery.com/)
-- [jQuery confirm](http://craftpip.github.io/jquery-confirm/)
-- [bootstrap fullscreen](http://craftpip.github.io/bootstrap-fullscreen-select/)
-- [dynatable](http://www.dynatable.com/)
+- [jQuery](https://jquery.com/) - MIT
+- [jQuery confirm](http://craftpip.github.io/jquery-confirm/) - MIT
+- [bootstrap fullscreen](http://craftpip.github.io/bootstrap-fullscreen-select/) - MIT
+- [dynatable](http://www.dynatable.com/) - AGPL
 - [is_cli](http://stackoverflow.com/a/25967493/195722)
 
 Made with <3 by Nathan Adams
