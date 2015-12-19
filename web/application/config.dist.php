@@ -12,4 +12,6 @@ $config["ACCEPTED_IPS"] = ["127.0.0.1", "::1"];
 
 $config["REDIRECT_URI"] = "";
 
+$config["URL"] = "";
+
 return $config;

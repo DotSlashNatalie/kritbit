@@ -20,7 +20,7 @@ abstract class base extends \system\engine\HF_Controller {
 	}
 
 	protected function loadRender($template, $parameters=array()) {
-		$newParameters = array_merge($parameters, ["user" => $this->user]);
+		$newParameters = array_merge($parameters, ["config" => $this->config, "user" => $this->user]);
 		return parent::loadRender($template, $newParameters);
 	}
 
