@@ -15,7 +15,9 @@ Kritbit has 2 purposes:
 
 Note: Kritbit originally had 3 purposes - one of them being running commands remotely. But since you can run any arbitrary script you can run a command remotely via SSH or some other external service. Yes, Windows does not have SSH natively (yet?) - but you can download an implementation [here](http://www.freesshd.com/). 
 
-Kritbit is designed to be simple and flexible. It makes no assumptions about your security and only provides minimal security procedures. I am not a crypto expert - but I make tools that work. So while I cannot guarantee that big brother won't be able to decrypt messages from external services - it should be good enough for most implementations. So please, if you find that the crypto security is less than perfect I accept patches of any size, creed, or color. The encryption technology used isn't meant to prevent a guy with a Beowulf cluster from cracking your message - but rather preventing some script kiddie with Firesheep from seeing what you are doing.
+# Security
+
+Kritbit is designed to be simple and flexible. It makes no assumptions, or verifications, about your security and only provides minimal security procedures. I am not a crypto expert - but I make tools that work. So while I cannot guarantee that big brother won't be able to decrypt messages from external services - it should be good enough for most implementations. So please, if you find that the crypto security is less than perfect I accept patches of any size, creed, or color. The encryption technology used isn't meant to prevent a guy with a Beowulf cluster from cracking your message - but rather preventing some script kiddie with Firesheep from seeing what you are doing.
 
 # Authentication/Authorization
 
@@ -64,7 +66,7 @@ And kritbit will run through the jobs that are marked to be ran by kritbit and a
 
 # Sending script runs to kritbit
 
-There is provided runcommand Python script in the scripts directory. This should be modified to fill in data for your script. This will wrap the encryption and data structure in an easy to use library.
+There is a provided runcommand Python script in the scripts directory. This should be modified to fill in data for your script. This will wrap the encryption and data structure in an easy to use library.
 
 To use it just invoke it like so:
 
@@ -88,11 +90,18 @@ ie:
 
 - Provide a way to offer more customization for viewing job information. Right now it's very generic - but it might be useful to be able to parse output and present custom columns or other data.
 - Permission matrix allowing people to grant fine permissions to jobs and job history
-    
 
 # Patches
 
-Patches are welcome of any kind. But please do note that your code will be integrated into the project under the MIT license. Mention to your contribution may not appear in the code or file. But we can certainly make mention on the README describing your contribution.
+Patches are welcome of any kind. But please do note that your code will be integrated into the project under the MIT license. Mention to your contribution may not appear in the specific code or file that it applies to. But we can certainly make mention on the README describing your contribution.
+
+If you do provide a patch changing backend crypto - then you should also provide a patch updating the crypto for the provided scripts.
+
+# Screenshots
+
+[![pic1](https://srchub.org/cdn/kritbit.png)](https://srchub.org/cdn/kritbit.png)
+
+[![pic1](https://srchub.org/cdn/kritbit2.PNG)](https://srchub.org/cdn/kritbit2.PNG)
     
 # Attributions
 
