@@ -111,6 +111,7 @@ Kritbit is licensed under the MIT uses the following projects
 - [bootstrap fullscreen](http://craftpip.github.io/bootstrap-fullscreen-select/) - MIT
 - [dynatable](http://www.dynatable.com/) - AGPL
 - [is_cli](http://stackoverflow.com/a/25967493/195722)
+- [dygraphs](http://dygraphs.com/) - MIT
 
 # Donations
 
