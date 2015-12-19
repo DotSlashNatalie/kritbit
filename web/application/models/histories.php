@@ -36,7 +36,11 @@ class Histories extends \system\engine\HF_Model {
 	    return round($bytes, $precision) . ' ' . $units[$pow];
 	}
 
-public function getSize() {
+	public function getSize() {
 		return $this->formatBytes(strlen($this->output));
+	}
+
+	public function getRawSize() {
+		return strlen($this->output);
 	}
 }

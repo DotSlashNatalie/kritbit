@@ -13,6 +13,13 @@
 
 <hr>
 
+<div style="margin: 0 auto; width: 80%" id="label">&nbsp;</div>
+<div style="margin: 0 auto; width:80%;" id="stats">
+
+</div>
+
+<hr>
+
 <table align="center" style="width: 30%;" class="table table-hover">
     <thead>
     <tr>
@@ -71,6 +78,30 @@
             }
         });
         $(".results").dynatable();
+
+        var graph = new Dygraph(document.getElementById("stats"),
+
+                {{csv|safe}},
+                {
+                    series: {
+                        'Result': {
+                            axis: 'y2'
+                        },
+                    },
+                    axes: {
+                        y2: {
+                            independentTicks: true
+                        }
+                    },
+                    legend: "always",
+                    hideOverlayOnMouseOut: false,
+                    labelsDiv: "label",
+                    showRangeSelector: true,
+                    animatedZooms: true,
+                    labels: ["Date", "Time Taken", "Log Size", "Result"]
+                }
+        );
+
     });
 
 </script>

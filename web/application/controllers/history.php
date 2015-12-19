@@ -39,12 +39,16 @@ class history extends base
 	    try {
 		    if (count($idArr) == 2) {
 			    /** @var \application\models\Histories $historyArr */
-			    //$historyArr = \application\models\Histories::getByField("jobs_id", $idArr[1]);
 			    $historyArr = DB::fetchObject("SELECT * FROM histories WHERE jobs_id = ? ORDER BY run_date DESC", '\application\models\Histories', [$idArr[1]]);
 			    /** @var \application\models\Jobs[] $jobObject */
 			    $jobObject = \application\models\Jobs::getByField("id", $idArr[1]);
 			    if ($this->checkAccess($jobObject[0])) {
-				    echo $this->loadRender("history.html", ["job" => $jobObject[0], "histories" => $historyArr]);
+				    $csv = [];
+				    /** @var \application\models\histories $history */
+				    foreach($historyArr as $history) {
+					    $csv[] = "\"" . str_replace("-", "/", $history->run_date) . "," . $history->time_taken . "," . $history->getRawSize() . "," . $history->result . "\\n\"";
+				    }
+				    echo $this->loadRender("history.html", ["csv" => implode("+", $csv), "job" => $jobObject[0], "histories" => $historyArr]);
 			    }
 		    }
 	    } catch (\Exception $e) {
