@@ -36,7 +36,6 @@ URL = ""
 # source http://stackoverflow.com/a/8232171/195722
 KEY_SIZE = 16
 BLOCK_SIZE = 32
-# JamPAo52/smpiObKa8p/MY5WAeDww0cOg9KiG6gMAYQ=
 
 def curl_post(url, postvals, header = []):
     buffer = StringIO()
